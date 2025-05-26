@@ -5,6 +5,7 @@ CERT_URL="https://clientdownload.catonetworks.com/public/certificates/CatoNetwor
 CER_FILE="CatoNetworksTrustedRootCA.cer"
 PEM_FILE="CatoNetworksTrustedRootCA.pem"
 MINIKUBE_CERT_DIR="${HOME}/.minikube/certs"
+DOCKER_CERT_DIR="${HOME}/.docker/certs.d"
 
 # Print usage
 usage() {
@@ -61,7 +62,15 @@ install_pem() {
         echo "Error copying to minikube cert directory."
         exit 4
     }
-    echo "Installed successfully."
+    echo "Installed to minikube successfully."
+
+    echo "Installing $PEM_FILE to $DOCKER_CERT_DIR..."
+    mkdir -p "$DOCKER_CERT_DIR"
+    cp "$PEM_FILE" "$DOCKER_CERT_DIR/" || {
+        echo "Error copying to Docker cert directory."
+        exit 5
+    }
+    echo "Installed to Docker successfully."
 }
 
 # Cleanup .cer file
