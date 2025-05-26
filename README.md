@@ -24,7 +24,7 @@ your **Colima** VM and **Minikube** cluster on macOS (Apple Silicon or Intel).
 ## Prerequisites
 
 ```bash
-brew install colima minikube docker
+brew install colima minikube docker lima-additional-guestagents
 ```
 
 Make sure the Docker client points at Colima’s socket:
