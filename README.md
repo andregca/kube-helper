@@ -24,7 +24,7 @@ your **Colima** VM and **Minikube** cluster on macOS (Apple Silicon or Intel).
 ## Prerequisites
 
 ```bash
-brew install colima minikube docker lima-additional-guestagents
+brew install colima minikube docker docker-credential-helper docker-compose lima-additional-guestagents
 ```
 
 Make sure the Docker client points at Colima’s socket:
@@ -32,6 +32,28 @@ Make sure the Docker client points at Colima’s socket:
 ```bash
 echo 'export DOCKER_HOST=unix://$HOME/.colima/default/docker.sock' >> ~/.bash_profile  # or ~/.zshrc
 source ~/.bash_profile    # reload shell
+```
+
+Edit the file ~/.docker/config.json to reflect the content below:
+```json
+{
+	"auths": {},
+	"currentContext": "colima",
+	"plugins": {
+		"debug": {
+			"hooks": "exec"
+		},
+		"scout": {
+			"hooks": "pull,buildx build"
+		}
+	},
+	"cliPluginsExtraDirs": [
+		"/opt/homebrew/lib/docker/cli-plugins"
+	],
+	"features": {
+		"hooks": "true"
+	}
+}
 ```
 
 ## Installation
